@@ -27,12 +27,12 @@ This function is designed to send messages to players in their preferred languag
 **Syntax:**
 
 ```php
-LangManager::send(string $iso, Player $player, string $messageKey, ...$params);
+LangManager::send(Player $player, string $iso, string $messageKey, ...$params);
 ```
 
 **Parameters**
-- string $iso: The ISO code of the language (e.g., “en” for English, “es” for Spanish).
 - Player $player: The player object to whom the message will be sent.
+- string $iso: The ISO code of the language (e.g., “en” for English, “es” for Spanish).
 - string $messageKey: The key corresponding to the message you want to send (defined in your language files).
 - ...$params: Optional parameters for message formatting.
 
@@ -51,12 +51,12 @@ This function is useful for translating strings that are not directly sent to th
 
 **Syntax:**
 ```php
-LangManager::translate(string $iso, Player $player, string $messageKey, ...$params);
+LangManager::translate(Player $player, string $iso, string $messageKey, ...$params);
 ```
 
 **Parameters:**
-- string $iso: The ISO code of the language.
 - Player $player: The player object to whom the translated message is intended.
+- string $iso: The ISO code of the language.
 - string $messageKey: The key corresponding to the message you want to translate.
 - ...$params: Optional parameters for dynamic content within the translated message.
 
