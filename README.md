@@ -20,19 +20,18 @@ First, make sure you import the LangManager class in your plugin.
 use matty\LangManager\LangManager;
 ```
 
-### Sending Messages with `LangManager::send()
+### Sending Messages with `LangManager::send()`
 
 This function is designed to send messages to players in their preferred language.
 
 **Syntax:**
 
 ```php
-LangManager::send(Player $player, string $iso, string $messageKey, ...$params);
+LangManager::send(Player $player, string $messageKey, ...$params);
 ```
 
 **Parameters**
 - Player $player: The player object to whom the message will be sent.
-- string $iso: The ISO code of the language (e.g., “en” for English, “es” for Spanish).
 - string $messageKey: The key corresponding to the message you want to send (defined in your language files).
 - ...$params: Optional parameters for message formatting.
 
@@ -41,7 +40,7 @@ LangManager::send(Player $player, string $iso, string $messageKey, ...$params);
 // Assuming you have a Player object $player
 $messageKey = "welcome_message"; // The message key from your language file
 
-LangManager::send($messageKey, $player);
+LangManager::send($player, $messageKey);
 ```
 In this example, if the player’s language is set to English, they will receive the message defined by the `welcome_message` key in the `en.ini file.
 
@@ -51,12 +50,11 @@ This function is useful for translating strings that are not directly sent to th
 
 **Syntax:**
 ```php
-LangManager::translate(Player $player, string $iso, string $messageKey, ...$params);
+LangManager::translate(Player $player, string $messageKey, ...$params);
 ```
 
 **Parameters:**
 - Player $player: The player object to whom the translated message is intended.
-- string $iso: The ISO code of the language.
 - string $messageKey: The key corresponding to the message you want to translate.
 - ...$params: Optional parameters for dynamic content within the translated message.
 
@@ -116,6 +114,7 @@ In addition to using parameters, the plugin provides several server and player v
 | **Formatting Tags**          |
 | `<rainbow>Message≤/rainbow>` | Wrap a message in these tags to rainbowize it |                                                                                                                                                                 |
 | `&0` to `&f`                 | Color codes for text formatting               |
+
 **Example of Using Server and Player Variables**
 
 Here’s how you can use server and player variables in a message:
@@ -134,5 +133,3 @@ The output would be:
 ## Licensing information
 
 This project is licensed under LGPL-3.0. Please see the LICENSE file for details.
-
-This project uses the [GeoIP](https://github.com/maxmind/GeoIP2-php) library for geolocation services. GeoIP is a library that allows for IP address geolocation, providing information about the location of IP addresses.
