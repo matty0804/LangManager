@@ -56,7 +56,7 @@ LangManager::translate(string $messageKey, Player $player, ...$params);
 **Parameters:**
 - string $messageKey: The key corresponding to the message you want to translate.
 - Player $player: The player object to whom the translated message is intended.
-- - ...$params: Optional parameters for dynamic content within the translated message.
+- ...$params: Optional parameters for dynamic content within the translated message.
 
 **Example Usage**
 ```php
@@ -83,7 +83,6 @@ welcome_message = "Welcome, {%0}! You are currently at {X}, {Y}, {Z}."
 You can send this message with parameters by using:
 ```php
 $playerName = $player->getName();
-$position = $player->getPosition();
 LangManager::send("welcome_message", $player, $playerName);
 ```
 This would result in a message like:
