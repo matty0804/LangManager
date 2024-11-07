@@ -27,20 +27,20 @@ This function is designed to send messages to players in their preferred languag
 **Syntax:**
 
 ```php
-LangManager::send(Player $player, string $messageKey, ...$params);
+LangManager::send(string $messageKey, Player $player, ...$params);
 ```
 
 **Parameters**
-- Player $player: The player object to whom the message will be sent.
 - string $messageKey: The key corresponding to the message you want to send (defined in your language files).
-- ...$params: Optional parameters for message formatting.
+- Player $player: The player object to whom the message will be sent.
+- - ...$params: Optional parameters for message formatting.
 
 **Example Usage**
 ```php
 // Assuming you have a Player object $player
 $messageKey = "welcome_message"; // The message key from your language file
 
-LangManager::send($player, $messageKey);
+LangManager::send($messageKey, $player);
 ```
 In this example, if the player’s language is set to English, they will receive the message defined by the `welcome_message` key in the `en.ini file.
 
@@ -50,13 +50,13 @@ This function is useful for translating strings that are not directly sent to th
 
 **Syntax:**
 ```php
-LangManager::translate(Player $player, string $messageKey, ...$params);
+LangManager::translate(string $messageKey, Player $player, ...$params);
 ```
 
 **Parameters:**
-- Player $player: The player object to whom the translated message is intended.
 - string $messageKey: The key corresponding to the message you want to translate.
-- ...$params: Optional parameters for dynamic content within the translated message.
+- Player $player: The player object to whom the translated message is intended.
+- - ...$params: Optional parameters for dynamic content within the translated message.
 
 **Example Usage**
 ```php
@@ -64,7 +64,7 @@ LangManager::translate(Player $player, string $messageKey, ...$params);
 $messageKey = "language_choose"; // The message key from your language file
 
 // Sending a translated message as a popup or embed
-$translatedMessage = LangManager::translate($player, $messageKey);
+$translatedMessage = LangManager::translate($messageKey, $player);
 $player->sendMessage($translatedMessage); // Sending the translated message to the player
 ```
 In this example, the player will receive the message defined by the `language_choose` key in the `es.ini` file.
@@ -84,7 +84,7 @@ You can send this message with parameters by using:
 ```php
 $playerName = $player->getName();
 $position = $player->getPosition();
-LangManager::send($player, "welcome_message", $playerName);
+LangManager::send("welcome_message", $player, $playerName);
 ```
 This would result in a message like:
 > "Welcome, PlayerName! You are currently at X, Y, Z."
@@ -119,7 +119,7 @@ In addition to using parameters, the plugin provides several server and player v
 
 Here’s how you can use server and player variables in a message:
 ```php
-LangManager::send($player, "welcome_message"));
+LangManager::send("welcome_message", $player);
 ```
 If your message in the `.ini` file is
 ```

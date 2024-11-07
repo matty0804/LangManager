@@ -16,6 +16,7 @@ class LangCommand extends Command{
 	
 	public function __construct(Main $plugin){
 		parent::__construct("lang", "Set your preferred language", "/lang <language>", ["language"]);
+		$this->setPermission("langmanager.lang");
 	}
 	
 	/**
@@ -27,8 +28,8 @@ class LangCommand extends Command{
 	 * @return bool
 	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool{
-		if(!$sender instanceof Player){
-			$sender->sendMessage(LangManager::translate("error_no_permission", $sender));
+		if(!($sender instanceof Player)){
+			$sender->sendMessage(LangManager::translate("error_no_permission"));
 			return false;
 		}
 		
@@ -52,9 +53,9 @@ class LangCommand extends Command{
 			return false;
 		}
 		
-		$langManager->setPlayerLanguage($sender, $iso);
+		$language = $langManager->setPlayerLanguage($sender, $iso);
         // Send confirmation message when the language is set
-		$sender->sendMessage(LangManager::translate("language_set", $sender));
+		LangManager::send("language_set", $sender, $language);
 		return true;
 	}
 }

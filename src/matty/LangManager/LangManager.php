@@ -28,7 +28,7 @@ class LangManager{
 	private static ?self $instance = null;
 	
 	/** @var array $lang Language data array. */
-	private array $lang;
+	private array $lang = [];
 	/** @var string[] $ipLangCache Caches the languages based on IP addresses. */
 	private array $ipLangCache = [];
 	/** @var GeoIpReader|null $geoIpReader GeoIP database reader for fetching country codes. */
@@ -133,11 +133,19 @@ class LangManager{
 			$plugin->getLogger()->warning("geoip library not found. Multi-language support is disabled");
 		}
 		foreach(self::ALL_ISO_CODES as $iso){
-			$plugin->saveResource("lang/" . $iso . ".ini", true);
-			$this->lang[$iso] = (array) parse_ini_file($plugin->getDataFolder() . "lang/" . $iso . ".ini", false, INI_SCANNER_NORMAL);
-			
+			$path = $plugin->getDataFolder() . "lang/" . $iso . ".ini";
+			$plugin->saveResource($path, true);
+			if(file_exists($path)){
+				
+				
+				$this->lang[$iso] = (array) parse_ini_file($path, false, INI_SCANNER_NORMAL);
+			}
+		}
+		foreach(self::ALL_ISO_CODES as $iso){
 			foreach($this->lang["en"] as $key => $str){
-				$this->lang[$iso][$key] = $str;
+				if(!isset($this->lang[$iso][$key])){
+					$this->lang[$iso][$key] = $str;
+				}
 			}
 		}
 	}
@@ -185,20 +193,27 @@ class LangManager{
 			self::$instance = null;
 			return $key;
 		}
+		$iso = self::LANG_DEFAULT;
 		
 		$player = array_shift($params);
-		if(!$player->isOnline()){
-			$iso = self::LANG_DEFAULT;
-			if(!($player instanceof Player)){
-				array_unshift($params, $player);
+		if($player instanceof Player){
+		
+			if(!$player->isOnline()){
+			
+				$str = $this->translateString($key, $iso, ...$params);
+			}else{
+				
+				$iso = $this->getPlayerLanguage($player);
+				$str = $this->translateString($key, $iso, ...$params);
+				$str = $this->translatePlayerVars($str, $player);
 			}
-			$str = $this->translateString($key, $iso, ...$params);
+			return $str;
 		}else{
-			$iso = $this->getPlayerLanguage($player);
-			$str = $this->translateString($key, $iso, ...$params);
-			$str = $this->translatePlayerVars($str, $player);
+			
+			
+			array_unshift($params, $player);
+			return $this->translateString($key, $iso, ...$params);
 		}
-		return $str;
 	}
 	
 	/**
@@ -219,10 +234,12 @@ class LangManager{
 	 * Changes the language of the player.
 	 *
 	 * @param Player $player The player whose language is to be changed.
-	 * @param string $iso The ISO code of the language
+	 * @param string $iso The ISO code of the languag
+	 * @return string The new language chosen
 	 */
-	public function setPlayerLanguage(Player $player, string $iso): void{
+	public function setPlayerLanguage(Player $player, string $iso): string{
 		$this->getPlugin()->getConfig()->set($player->getName(), $iso);
+		return array_search($iso,self::ALL_ISO_CODES) ?? "";
 	}
 	
 	/**
@@ -307,19 +324,15 @@ class LangManager{
 		
 		$str = $this->lang[$iso][$key] ?? $keyData;
 		
-		$colorIndex = null;
+		
 		foreach($params as $i => $param){
-			if(!isset(self::$RAINBOW_PATTERN[$colorIndex])){
-				$colorIndex = 0;
-			}
-			$color = self::$RAINBOW_PATTERN[$colorIndex++];
 			
 			
 			if(!is_string($param) && !is_float($param) && !is_int($param) && !($i === 0 && $param === null)){
 				$this->log(self::LOG_TYPE_NOT_CASTABLE, $key, $iso);
 				$param = "";
 			}
-			$str = str_replace("{%" . $i . "}", $color . strval($param) . self::DEFAULT_COLOR, $str);
+			$str = str_replace("{%" . $i . "}",  strval($param), $str);
 			$str = preg_replace('/' . preg_quote('{%}') . '/', strval($param), $str, 1);
 			
 			unset($params[$i]);
