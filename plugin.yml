@@ -1,8 +1,8 @@
 name: LangManager
-main: matty\LangManager\Main
+main: mattyhq\LangManager\Main
 version: 1.0.0
 api: [5.0.0]
-author: matty
+author: mattyhq
 description: A language management plugin for PocketMine-MP with multi-language support and variable translation.
 permissions:
   langmanager.lang:

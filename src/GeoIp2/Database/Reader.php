@@ -14,9 +14,9 @@ use GeoIp2\Model\Domain;
 use GeoIp2\Model\Enterprise;
 use GeoIp2\Model\Isp;
 use GeoIp2\ProviderInterface;
-use plugins\LangManager\src\MaxMind\Db\Reader as DbReader;
-use plugins\LangManager\src\MaxMind\Db\Reader\InvalidDatabaseException;
-use plugins\LangManager\src\MaxMind\Db\Reader\Metadata;
+use MaxMind\Db\Reader as DbReader;
+use MaxMind\Db\Reader\InvalidDatabaseException;
+use MaxMind\Db\Reader\Metadata;
 
 /**
  * Instances of this class provide a reader for the GeoIP2 database format.
@@ -39,7 +39,7 @@ use plugins\LangManager\src\MaxMind\Db\Reader\Metadata;
  * {@link \GeoIp2\Exception\AddressNotFoundException} exception will be
  * thrown. If an invalid IP address is passed to one of the methods, a
  * SPL {@link \InvalidArgumentException} will be thrown. If the database is
- * corrupt or invalid, a {@link \plugins\LangManager\src\MaxMind\Db\Reader\InvalidDatabaseException}
+ * corrupt or invalid, a {@link \MaxMind\Db\Reader\InvalidDatabaseException}
  * will be thrown.
  */
 class Reader implements ProviderInterface
