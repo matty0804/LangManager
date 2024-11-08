@@ -17,7 +17,7 @@ This section will guide you on how to use the `LangManager::send()` and `LangMan
 
 First, make sure you import the LangManager class in your plugin.
 ```php
-use matty\LangManager\LangManager;
+use mattyhq\LangManager\LangManager;
 ```
 
 ### Sending Messages with `LangManager::send()`
