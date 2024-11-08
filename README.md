@@ -42,7 +42,7 @@ $messageKey = "welcome_message"; // The message key from your language file
 
 LangManager::send($messageKey, $player);
 ```
-In this example, if the player’s language is set to English, they will receive the message defined by the `welcome_message` key in the `en.ini file.
+In this example, if the player’s language is set to English, they will receive the message defined by the `welcome_message` key in the `en.ini` file.
 
 ### Translating Messages with `LangManager::translate()`
 
@@ -87,6 +87,7 @@ LangManager::send("welcome_message", $player, $playerName);
 ```
 This would result in a message like:
 > "Welcome, PlayerName! You are currently at X, Y, Z."
+
 You can pass as much parameters as needed.
 
 ### Available Server and Player Variables
