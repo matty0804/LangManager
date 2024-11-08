@@ -33,8 +33,8 @@ class Main extends PluginBase{
 	public function onEnable(): void{
 		self::$instance = $this;
 		$this->saveResource(self::MAXMIND_DB_RESOURCE, true);
-		$this->saveResource("lang/en.ini", true);
-		$this->saveResource("lang/es.ini", true);
+		$this->saveResource("lang/en.ini", false);
+		$this->saveResource("lang/es.ini", false);
 		
 		$this->getServer()->getCommandMap()->register("langmanager", new LangCommand($this));
 		
